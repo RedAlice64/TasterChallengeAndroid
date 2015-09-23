@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">TasterChallengeAndroid</string>
+    <string name = "welcome_string">Hello Everyone!!</string>
+    <string name="parent_toast">Parental Control Button Pushed</string>
+
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name = "settings_toast">You clicked on settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="settings_strings">These are the settings!</string>
+    <string name="title_activity_parental_control">ParentalControl</string>
+
 </resources>
