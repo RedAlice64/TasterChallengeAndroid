@@ -2,14 +2,32 @@
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@drawable/background_settings"
+    android:gravity="left"
     android:orientation="horizontal"
     tools:context="edu.bu.ec500c1.tasterchallengeandroid.SettingsActivity">
+
+    <ImageButton
+        android:id="@+id/checkbox"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:background="@drawable/check_icon"
+        android:layout_gravity="bottom" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sbVolume"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        android:text="@string/settings_strings"/>
+        android:text="@string/volume_control"
+        android:layout_gravity="center_vertical" />
+
 </LinearLayout>
+
 
