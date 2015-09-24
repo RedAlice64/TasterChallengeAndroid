@@ -1,6 +1,7 @@
 package edu.bu.ec500c1.tasterchallengeandroid;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,27 +10,38 @@ import android.widget.ImageButton;
 import android.view.View;
 import android.widget.Toast;
 import android.content.Intent;
+import android.media.MediaPlayer;
 
 
 public class MainActivity extends Activity {
 
+    static final int REQUEST_SETTINGS = 0;
+
     private ImageButton mSettingsButton;
     private ImageButton mLockButton;
+    private MediaPlayer mMP;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startSettingsActivity();
+        startParentalControlActivity();
 
+        mMP = MediaPlayer.create(this,R.raw.backgroundmusic);
+        mMP.start();
+
+    }
+    public void startParentalControlActivity(){
         mLockButton = (ImageButton) findViewById(R.id.parental_control);
-        mLockButton.setOnClickListener(new View.OnClickListener(){
+        mLockButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this,ParentalControl.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ParentalControl.class);
                 startActivity(intent);
             }
         });
-
     }
     public void startSettingsActivity(){
         mSettingsButton = (ImageButton) findViewById(R.id.settings_button);
@@ -37,11 +49,17 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view){
                 //start settings Activity
+                //get back status of volume bar
                 Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_SETTINGS);
             }
 
         });
+    }
+
+    protected void onPause() {
+        super.onPause();
+        mMP.release();
     }
 
     @Override
