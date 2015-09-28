@@ -21,13 +21,6 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:text="@string/volume_control"
-        android:layout_gravity="center_vertical" />
-
 </LinearLayout>
 
 
