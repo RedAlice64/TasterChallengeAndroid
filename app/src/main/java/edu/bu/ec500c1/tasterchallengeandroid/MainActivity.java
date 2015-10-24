@@ -1,6 +1,7 @@
 package edu.bu.ec500c1.tasterchallengeandroid;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,8 @@ public class MainActivity extends Activity {
 
     private ImageButton mSettingsButton;
     private ImageButton mLockButton;
-    private MediaPlayer mMP;
+    public MediaPlayer mMP;
+    private Button mExitButton; // button to exit app
 
 
     @Override
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         startSettingsActivity();
         startParentalControlActivity();
+        exitApp(); //will stop media when user exits the app
 
         mMP = MediaPlayer.create(this,R.raw.backgroundmusic);
         mMP.start();
@@ -51,15 +54,27 @@ public class MainActivity extends Activity {
                 //start settings Activity
                 //get back status of volume bar
                 Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
-                startActivityForResult(intent,REQUEST_SETTINGS);
+                startActivityForResult(intent, REQUEST_SETTINGS);
             }
 
+        });
+    }
+    public void exitApp(){
+        mExitButton = (Button) findViewById(R.id.exit_button);
+        mExitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                mMP.release();
+
+                finish();
+                System.exit(0);
+            }
         });
     }
 
     protected void onPause() {
         super.onPause();
-        mMP.release();
+        //mMP.release();
     }
 
     @Override

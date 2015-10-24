@@ -12,6 +12,11 @@ import android.widget.SeekBar;
 import android.media.AudioManager;
 import android.widget.ImageButton;
 import android.content.Intent;
+import android.widget.Toast;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
+import java.util.List;
+import android.content.ComponentName;
 
 public class SettingsActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
 
@@ -27,8 +32,8 @@ public class SettingsActivity extends ActionBarActivity implements SeekBar.OnSee
 
 
         mSeekBarVolume = (SeekBar) findViewById(R.id.sbVolume);
-        mMP = MediaPlayer.create(this,R.raw.backgroundmusic);
-        mMP.start();
+       // mMP = MediaPlayer.create(this,R.raw.backgroundmusic);
+       // mMP.start();
         mAM = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         int maxVolume = mAM.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -43,7 +48,7 @@ public class SettingsActivity extends ActionBarActivity implements SeekBar.OnSee
     }
     protected void onPause() {
         super.onPause();
-        mMP.release();
+       // mMP.release();
     }
 
     public void setVolume(){

@@ -2,6 +2,11 @@
     <string name="app_name">TasterChallengeAndroid</string>
     <string name = "welcome_string">Hello Everyone!!</string>
     <string name="parent_toast">Parental Control Button Pushed</string>
+    <string name ="reset_button">Reset my PIN</string>
+    <string name = "exit_button">Exit</string>
+    <string name = "default_pin">2832</string>
+    <string name = "access_text">To access, please enter the numbers:
+    TWO EIGHT THREE TWO</string>
 
 
     <string name="hello_world">Hello world!</string>
