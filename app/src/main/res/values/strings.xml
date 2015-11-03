@@ -16,5 +16,6 @@
 
     <string name="settings_strings">These are the settings!</string>
     <string name="title_activity_parental_control">ParentalControl</string>
+    <string name="title_activity_control_settings">ControlSettingsActivity</string>
 
 </resources>

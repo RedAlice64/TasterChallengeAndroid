@@ -1,28 +1,27 @@
 package edu.bu.ec500c1.tasterchallengeandroid;
-
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import java.lang.String;
-//import com.android.uiautomator.core.UiObject;
+import android.content.Intent;
+
 
 
 public class ParentalControl extends ActionBarActivity {
 
-    String correctPinArray[];
+    String correctPin = "2832";
     private Button mResetPinButton;
     private EditText mPinNumber;
     private ImageButton mBackButton;
     private Button mEnterButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,33 +30,49 @@ public class ParentalControl extends ActionBarActivity {
 
         backButtonPressed();
         enterButtonPressed();
+
+
     }
-      public void enterButtonPressed(){
-          mEnterButton = (Button) findViewById(R.id.enter_button);
-          mEnterButton.setOnClickListener(new View.OnClickListener(){
-              @Override
-              public void onClick(View view){
-                  //take me to a fragment???
-              }
-          });
-      }
-      public void backButtonPressed(){
-          mBackButton = (ImageButton) findViewById(R.id.back_button);
-          mBackButton.setOnClickListener(new View.OnClickListener() {
-              @Override
-                public void onClick(View view){
-                  onBackPressed();
-              }
-          });
-      }
-   /* public void checkPinNumber(){
+    public void enterButtonPressed(){
+        mEnterButton = (Button) findViewById(R.id.enter_button);
+        mEnterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (checkPinNumber()) {
+                    //pin number is right so go to parental control settings
+                    Intent intent = new Intent(ParentalControl.this,ControlSettingsActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(ParentalControl.this, "incorrect, try again", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+    }
+
+    public void backButtonPressed(){
+        mBackButton = (ImageButton) findViewById(R.id.back_button);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                onBackPressed();
+            }
+        });
+    }
+    public boolean checkPinNumber(){
         boolean pinCorrect;
         mPinNumber = (EditText) findViewById(R.id.pin_key);
         String value = mPinNumber.getText().toString().trim();
-        for(int i = 0;i<value.length();i++){
-            UiObject textField = new UiObject(new UiSelector().ParentalControl("android.widget.EditText").instance(i));
+
+        if(correctPin.equals(value) ){
+            pinCorrect =true;
         }
-    }*/
+        else{
+            pinCorrect =false;
+        }
+        return pinCorrect;
+    }
 
     public void setPinButton(){
         mResetPinButton = (Button) findViewById(R.id.reset_button);
