@@ -9,9 +9,10 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.widget.VideoView;
 
 
 public class MainActivity extends Activity {
@@ -20,9 +21,16 @@ public class MainActivity extends Activity {
 
     private ImageButton mSettingsButton;
     private ImageButton mLockButton;
+    private PlayerVK player;
+    private RelativeLayout videoContainer;
     public MediaPlayer mMP;
     private Button mExitButton; // button to exit app
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        player.onResumePlayerVK();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,11 @@ public class MainActivity extends Activity {
 
         mMP = MediaPlayer.create(this,R.raw.backgroundmusic);
         mMP.start();
+        player=new PlayerVK(this);
+        //setContentView(player,new ActionBar.LayoutParams(50,50));
+
+        videoContainer=(RelativeLayout)findViewById(R.id.video_container);
+        videoContainer.addView(player,1000,800);
 
     }
     public void startParentalControlActivity(){
@@ -75,6 +88,8 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         //mMP.release();
+        mMP.release();
+        player.onPausePlayerVK();
     }
 
     @Override
