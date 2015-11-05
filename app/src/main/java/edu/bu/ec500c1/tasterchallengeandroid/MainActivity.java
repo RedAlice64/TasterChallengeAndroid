@@ -3,6 +3,7 @@ package edu.bu.ec500c1.tasterchallengeandroid;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -72,21 +73,20 @@ public class MainActivity extends Activity {
 
                 VideoListAdapter adapter=(VideoListAdapter)mVideoList.getAdapter();
                 //videoDescripter descripter=(videoDescripter)adapter.getItem((int)id);
-                getRequestMethod request = new getRequestMethod();
-                request.getVideoID((int)id);
-                if ((int)id==0){
-                    request.setVideoID("Sample.mp4");
-                    Intent i = new Intent(MainActivity.this,ParentalControl.class);
-                    startActivity(i);
+                //getRequestMethod request = new getRequestMethod();
+                //request.getVideoID((int)id);
+                Intent intent=new Intent(MainActivity.this,VideoPlayerActivity.class);
+
+                if ((int)id==0) {
+                    intent.putExtra("id","Sample.mp4");
                 }
                 else if((int)id ==1){
-                    request.setVideoID("car.avi");
-                    Intent i = new Intent(MainActivity.this,SettingsActivity.class);
-                    startActivity(i);
+                    intent.putExtra("id","car2.mp4");
                 }
                 else if((int)id ==2){
-                    request.setVideoID("car_proc.avi");
+                    intent.putExtra("id","car_proc.mp4");
                 }
+                startActivity(intent);
 
             }
         });
@@ -101,9 +101,9 @@ public class MainActivity extends Activity {
         getResources().getDrawable(R.drawable.back_button_icon);
         getResources().getDrawable(R.drawable.check_icon);
 
-        Bitmap bm= BitmapFactory.decodeResource(getResources(),R.drawable.back_button_icon);
-        Bitmap bm2 = BitmapFactory.decodeResource(getResources(), R.drawable.check_icon);
-        Bitmap bm3 = BitmapFactory.decodeResource(getResources(), R.drawable.check_icon);
+        Bitmap bm= BitmapFactory.decodeResource(getResources(),R.drawable.sample);
+        Bitmap bm2 = BitmapFactory.decodeResource(getResources(), R.drawable.car);
+        Bitmap bm3 = BitmapFactory.decodeResource(getResources(), R.drawable.car_proc);
 
         video1.add(new videoDescripter(bm, "1"));
         video1.add(new videoDescripter(bm2, "2"));

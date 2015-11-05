@@ -43,8 +43,8 @@ public class getRequestMethod {
         class HttpGetAsyncTask extends AsyncTask<String, Void, String> {
 
             @Override
-            protected String doInBackground(String... params) {
-                String paramVideoName = params[0];
+            protected String doInBackground(String... VideoName) {
+                String paramVideoName = VideoName[0];
                 System.out.println("The videoName is: " + paramVideoName);
 
                 //create an intermediate to connect to the internet
@@ -52,6 +52,8 @@ public class getRequestMethod {
                 HttpGet httpGet = new HttpGet("http://vid4kids.s3.amazonaws.com/" + paramVideoName);
                 try {
                     HttpResponse httpResponse = httpClient.execute(httpGet);
+                    int stauts = httpResponse.getStatusLine().getStatusCode();
+
                     InputStream inputStream = httpResponse.getEntity().getContent();
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -78,6 +80,7 @@ public class getRequestMethod {
 
         }
     }
+
 
    /* public String getInternetData() throws Exception {
 

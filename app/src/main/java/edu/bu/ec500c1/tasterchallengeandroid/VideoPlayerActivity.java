@@ -11,14 +11,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoPlayerActivity extends ActionBarActivity {
+    private VideoView videoView;
+    private String VideoName;
+    @Override
+    protected void onResume(){
+        super.onResume();
+        videoView.start();
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video_player);
 
+        videoView= (VideoView)findViewById(R.id.video_player);
+        videoView.setVideoPath("http://vid4kids.s3.amazonaws.com/" + getIntent().getExtras().getString("id"));
+        String string = "http://vid4kids.s3.amazonaws.com/" + getIntent().getExtras().getString("id");
+    }
    // public ListView mVideoList;
-   private PlayerVK player;
+  /* private PlayerVK player;
     private RelativeLayout videoContainer;
 
     @Override
@@ -63,7 +79,7 @@ public class VideoPlayerActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
 

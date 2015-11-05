@@ -13,5 +13,8 @@
         android:id="@+id/video_container"
         ></RelativeLayout>
 
-
+    <VideoView
+        android:layout_width="1000dp"
+        android:layout_height="1000dp"
+        android:id="@+id/video_player"/>
 </RelativeLayout>
