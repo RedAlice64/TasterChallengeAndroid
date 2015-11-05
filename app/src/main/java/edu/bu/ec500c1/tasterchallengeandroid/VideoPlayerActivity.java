@@ -4,26 +4,44 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoPlayerActivity extends ActionBarActivity {
 
-    public ListView mVideoList;
+   // public ListView mVideoList;
+   private PlayerVK player;
+    private RelativeLayout videoContainer;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        player.onResumePlayerVK();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
-        mVideoList=(ListView)findViewById(R.id.video_list);
-        VideoListAdapter adapter=new VideoListAdapter(this,getVideoData());
 
-        mVideoList.setAdapter(adapter);
+        player=new PlayerVK(this);
+        videoContainer=(RelativeLayout)findViewById(R.id.video_container);
+        videoContainer.addView(player, 1000, 800);
     }
+
+    protected void onPause() {
+        super.onPause();
+        player.onPausePlayerVK();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,19 +65,6 @@ public class VideoPlayerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<videoDescripter> getVideoData(){
-
-        List<videoDescripter> video1 = new ArrayList<videoDescripter>();
-
-        getResources().getDrawable(R.drawable.back_button_icon);
-
-        Bitmap bm= BitmapFactory.decodeResource(getResources(),R.drawable.back_button_icon);
-
-        video1.add(new videoDescripter(bm,"1"));
-        video1.add(new videoDescripter(bm,"2"));
-
-        return video1;
-    }
 
 
 }

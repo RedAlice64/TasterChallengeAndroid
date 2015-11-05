@@ -41,8 +41,9 @@ public class VideoListAdapter extends BaseAdapter {
         LayoutInflater inflater=Context.getLayoutInflater();
         View itemView=inflater.inflate(R.layout.video_item_layout, null);
         videoDescripter descripter=list.get(position);
-        ImageView imageView=(ImageView)itemView.findViewById(R.id.preprocessed_image);
+        ImageView imageView=(ImageView)itemView.findViewById(R.id.video1_image);
         imageView.setImageBitmap(descripter.getImageBitmap());
+        //imageView1.setImageBitmap(descripter.getImageBitmap());
         return itemView;
     }
 }

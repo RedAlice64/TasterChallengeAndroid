@@ -1,44 +1,59 @@
 <RelativeLayout xmlns:android ="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
     android:background="@drawable/education_background"
     android:gravity="left"
 
     android:orientation="horizontal">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/video_container"
-        ></RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:gravity="left"
-        android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/settings_button"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_toEndOf="@+id/parental_control"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/settings_icon"/>
-        <ImageButton
-            android:id="@+id/parental_control"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/lock_icon" />
-        <Button
-            android:id="@+id/exit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/settings_button"
-            android:text = "@string/exit_button"/>
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout">
 
     </RelativeLayout>
 
+    <ImageButton
+        android:id="@+id/settings_button"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:background="@drawable/settings_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="51dp" />
 
+    <Button
+        android:id="@+id/exit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "@string/exit_button"
+        android:layout_alignTop="@+id/settings_button"
+        android:layout_toEndOf="@+id/settings_button" />
+
+    <ImageButton
+        android:id="@+id/parental_control"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:background="@drawable/lock_icon"
+        android:layout_alignTop="@+id/settings_button"
+        android:layout_alignParentStart="true" />
+
+    <Gallery
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gallery"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/exit_button" />
+
+    <ListView
+        android:id="@+id/video_list"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignBaseline="@+id/relativeLayout">
+
+    </ListView>
 </RelativeLayout>
