@@ -10,19 +10,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.MediaController;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VideoPlayerActivity extends ActionBarActivity {
     private VideoView videoView;
+    private MediaController controller;
+    private RadioGroup selectionRadioGroup;
+    private OnCheckedChangeListener selectListener;
+    private Map<Integer,Integer> idMap;
+
     private String VideoName;
     @Override
     protected void onResume(){
         super.onResume();
         videoView.start();
+        videoView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                videoView.pause();
+                onPauseForSelection();
+            }
+        },5000);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +51,51 @@ public class VideoPlayerActivity extends ActionBarActivity {
         videoView= (VideoView)findViewById(R.id.video_player);
         videoView.setVideoPath("http://vid4kids.s3.amazonaws.com/" + getIntent().getExtras().getString("id"));
         String string = "http://vid4kids.s3.amazonaws.com/" + getIntent().getExtras().getString("id");
+        controller=new MediaController(this);
+        videoView.setMediaController(controller);
+        selectionRadioGroup=(RadioGroup)findViewById(R.id.selection_group);
+        selectionRadioGroup.setAlpha(0.0f);
+
+        idMap=new HashMap<Integer, Integer>();
+        idMap.put(R.id.selection_0,0);
+        idMap.put(R.id.selection_1,1);
+        idMap.put(R.id.selection_2,2);
+        idMap.put(R.id.selection_3,3);
+
+        /*RadioButton button=new RadioButton(this);
+        button.setText("sefhiawehgoiawg");
+        selectionRadioGroup.addView(button);*/
+        //onPauseForSelection();
+    }
+
+    public void onPauseForSelection(){
+        selectionRadioGroup.setAlpha(1.0f);
+        final MultipleChoice multipleChoice=new MultipleChoice();
+        selectListener=new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(multipleChoice.isCorrect(idMap.get(checkedId)))Toast.makeText(VideoPlayerActivity.this,"Correct!",Toast.LENGTH_SHORT).show();
+                else Toast.makeText(VideoPlayerActivity.this,"Not correct!",Toast.LENGTH_SHORT).show();
+                group.setAlpha(0.0f);
+                videoView.start();
+            }
+        };
+        selectionRadioGroup.setOnCheckedChangeListener(selectListener);
+        RadioButton[] buttons=new RadioButton[4];
+        buttons[0]=(RadioButton)findViewById(R.id.selection_0);
+        buttons[1]=(RadioButton)findViewById(R.id.selection_1);
+        buttons[2]=(RadioButton)findViewById(R.id.selection_2);
+        buttons[3]=(RadioButton)findViewById(R.id.selection_3);
+        for(int i=0;i<4;i++){
+            buttons[i].setText(multipleChoice.next());
+        }
     }
    // public ListView mVideoList;
   /* private PlayerVK player;
     private RelativeLayout videoContainer;
 
     @Override
-    protected void onResume() {
+    protected void onResume(){
         super.onResume();
         player.onResumePlayerVK();
     }

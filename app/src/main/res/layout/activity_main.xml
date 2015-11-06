@@ -5,13 +5,28 @@
     android:gravity="left"
 
     android:orientation="horizontal">
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/list_container">
+        <ListView
+            android:id="@+id/video_list"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            >
+
+        </ListView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="50dip"
         android:gravity="left"
         android:orientation="horizontal"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/button_container"
+        android:layout_below="@id/list_container">
 
     </RelativeLayout>
 
@@ -41,13 +56,5 @@
         android:layout_alignParentStart="true" />
 
 
-    <ListView
-        android:id="@+id/video_list"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_alignBaseline="@+id/relativeLayout">
 
-    </ListView>
 </RelativeLayout>
