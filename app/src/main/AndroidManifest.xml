@@ -38,6 +38,16 @@
             android:name=".VideoPlayerActivity"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".PasswordKeyboard"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ParentalControlActual"
+            android:screenOrientation="landscape"/>
+        <receiver android:name=".TimeoutReceiver">
+            <intent-filter>
+                <action android:name="edu.bu.ec500c1.tasterchallengeandroid.action.DURATION_END_ACTION"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".TimerService"/>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>

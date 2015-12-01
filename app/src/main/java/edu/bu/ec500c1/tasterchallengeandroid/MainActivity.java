@@ -1,6 +1,8 @@
 package edu.bu.ec500c1.tasterchallengeandroid;
 
 import android.app.Activity;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
@@ -28,9 +30,11 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     static final int REQUEST_SETTINGS = 0;
+    public static String DURATION_END_ACTION = "edu.bu.ec500c1.tasterchallengeandroid.action.DURATION_END_ACTION";
 
     private ImageButton mSettingsButton;
     private ImageButton mLockButton;
+    private SharedPreferences preferences;
    // private PlayerVK player;
    // private RelativeLayout videoContainer;
     public MediaPlayer mMP;
@@ -62,6 +66,16 @@ public class MainActivity extends Activity {
 
         mVideoList.setAdapter(adapter);
 
+        preferences=this.getPreferences(MODE_PRIVATE);
+        Intent intent=new Intent(this,TimerService.class);
+        intent.putExtra("duration_time",preferences.getInt("duration_time",15));
+        intent.putExtra("rest_time", preferences.getInt("rest_time", 15));
+        startService(intent);
+
+        TimeoutReceiver receiver=new TimeoutReceiver();
+        IntentFilter filter=new IntentFilter(DURATION_END_ACTION);
+        registerReceiver(receiver,filter);
+
 
     }
 
@@ -78,7 +92,7 @@ public class MainActivity extends Activity {
                 Intent intent=new Intent(MainActivity.this,VideoPlayerActivity.class);
 
                 if ((int)id==0) {
-                    intent.putExtra("id","Sample.mp4");
+                    intent.putExtra("id","animal.mp4");
                 }
                 else if((int)id ==1){
                     intent.putExtra("id","car2.mp4");
@@ -116,7 +130,7 @@ public class MainActivity extends Activity {
         mLockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ParentalControl.class);
+                Intent intent = new Intent(MainActivity.this, ParentalControlActual.class);
                 startActivity(intent);
             }
         });
@@ -174,4 +188,6 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

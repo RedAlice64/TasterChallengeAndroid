@@ -2,6 +2,8 @@ package edu.bu.ec500c1.tasterchallengeandroid;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
@@ -29,24 +31,36 @@ public class VideoPlayerActivity extends ActionBarActivity {
     private RadioGroup selectionRadioGroup;
     private OnCheckedChangeListener selectListener;
     private Map<Integer,Integer> idMap;
+    private Handler handler;
+    private int gameScore;
+    private int[] pause={6000,18000,28000,42000};
 
     private String VideoName;
+
+    private MultipleChoice[] multipleChoices;
+    private int choiceIter=0;
     @Override
     protected void onResume(){
         super.onResume();
+        videoView.requestFocus();
         videoView.start();
+        scheduleVideoPause(10000);
+
+        /*
         videoView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 videoView.pause();
                 onPauseForSelection();
             }
-        },5000);
+        },5000);*/
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        handler=new Handler();
 
         videoView= (VideoView)findViewById(R.id.video_player);
         videoView.setVideoPath("http://vid4kids.s3.amazonaws.com/" + getIntent().getExtras().getString("id"));
@@ -56,12 +70,24 @@ public class VideoPlayerActivity extends ActionBarActivity {
         selectionRadioGroup=(RadioGroup)findViewById(R.id.selection_group);
         selectionRadioGroup.setAlpha(0.0f);
 
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(VideoPlayerActivity.this, String.valueOf(gameScore), Toast.LENGTH_LONG).show();
+            }
+        });
+
         idMap=new HashMap<Integer, Integer>();
         idMap.put(R.id.selection_0,0);
         idMap.put(R.id.selection_1,1);
         idMap.put(R.id.selection_2,2);
         idMap.put(R.id.selection_3,3);
 
+
+        multipleChoices=new MultipleChoice[4];
+        for(int i=0;i<4;i++){
+            multipleChoices[i]=new MultipleChoice(i+1);
+        }
         /*RadioButton button=new RadioButton(this);
         button.setText("sefhiawehgoiawg");
         selectionRadioGroup.addView(button);*/
@@ -74,10 +100,15 @@ public class VideoPlayerActivity extends ActionBarActivity {
         selectListener=new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(multipleChoice.isCorrect(idMap.get(checkedId)))Toast.makeText(VideoPlayerActivity.this,"Correct!",Toast.LENGTH_SHORT).show();
-                else Toast.makeText(VideoPlayerActivity.this,"Not correct!",Toast.LENGTH_SHORT).show();
-                group.setAlpha(0.0f);
-                videoView.start();
+                //if(multipleChoices[choiceIter].isCorrect(idMap.get(checkedId))){
+                //if(choiceIter==idMap.get(checkedId)){
+                    Toast.makeText(VideoPlayerActivity.this,"Correct!",Toast.LENGTH_SHORT).show();
+                    gameScore+=100;
+                //}
+                //else Toast.makeText(VideoPlayerActivity.this,"Not correct!",Toast.LENGTH_SHORT).show();
+                    group.setAlpha(0.0f);
+                    videoView.start();
+                scheduleVideoPause(11000);
             }
         };
         selectionRadioGroup.setOnCheckedChangeListener(selectListener);
@@ -87,8 +118,23 @@ public class VideoPlayerActivity extends ActionBarActivity {
         buttons[2]=(RadioButton)findViewById(R.id.selection_2);
         buttons[3]=(RadioButton)findViewById(R.id.selection_3);
         for(int i=0;i<4;i++){
-            buttons[i].setText(multipleChoice.next());
+            buttons[i].setText(multipleChoices[choiceIter].next());
         }
+        choiceIter++;
+
+        if(choiceIter>3)choiceIter=0;
+    }
+
+    private void scheduleVideoPause(int msec) {
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                videoView.pause();
+                onPauseForSelection();
+            }
+        }, msec);
     }
    // public ListView mVideoList;
   /* private PlayerVK player;

@@ -15,6 +15,15 @@ public class MultipleChoice {
         iterator=0;
         correctId=3;
     }
+    MultipleChoice(int id){
+        choices=new String[4];
+        choices[0]="lion";
+        choices[1]="zebra";
+        choices[2]="panda";
+        choices[3]="elephant";
+        iterator=0;
+        correctId=id;
+    }
     MultipleChoice(String XML){
 
     }
